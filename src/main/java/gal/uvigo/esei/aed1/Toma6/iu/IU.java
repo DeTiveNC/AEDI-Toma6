@@ -70,7 +70,7 @@ public class IU {
      * correspondiente
      */
     public Collection<String> pedirNombresJugadores() {
-
+        return null;
     }
 
     /**
@@ -79,12 +79,7 @@ public class IU {
      * @param jugador Jugador para el cual se mostrarán los datos por pantalla
      */
     private void mostrarJugador(Jugador jugador) {
-
-    
-    
-    
-    
-    
+        System.out.println(jugador);
     }
 
     /**
@@ -93,11 +88,9 @@ public class IU {
      * @param jugadores Jugadores cuyos datos se mostrarán por pantalla
      */
     public void mostrarJugadores(Collection<Jugador> jugadores) {
-
-    
-    
-    
-    
+        for (Jugador jugador : jugadores) {
+            mostrarJugador(jugador);
+        }
     }
 
 }
