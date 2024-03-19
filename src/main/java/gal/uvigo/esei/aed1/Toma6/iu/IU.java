@@ -88,9 +88,7 @@ public class IU {
      * @param jugadores Jugadores cuyos datos se mostrarán por pantalla
      */
     public void mostrarJugadores(Collection<Jugador> jugadores) {
-        for (Jugador jugador : jugadores) {
-            mostrarJugador(jugador);
-        }
+        System.out.println(jugadores);
     }
 
 }
