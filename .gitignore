@@ -24,9 +24,9 @@ hs_err_pid*
 replay_pid*
 
 # IDE
-.idea/
-.vscode/
-*.iml
-target/
+/Proyecto-Toma6_4/.idea/
+/Proyecto-Toma6_4/.vscode/
+/Proyecto-Toma6_4/*.iml
+/Proyecto-Toma6_4/target/
 /Proyecto-Toma6_4/nbproject/private/
 /Proyecto-Toma6_4/build/
