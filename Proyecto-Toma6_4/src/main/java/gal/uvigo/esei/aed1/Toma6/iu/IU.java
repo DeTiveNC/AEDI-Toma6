@@ -5,8 +5,10 @@
 
 package gal.uvigo.esei.aed1.Toma6.iu;
 
+import gal.uvigo.esei.aed1.Toma6.core.Carta;
 import gal.uvigo.esei.aed1.Toma6.core.Jugador;
 import java.util.Collection;
+import java.util.List;
 import java.util.Scanner;
 
 public class IU {
@@ -63,24 +65,29 @@ public class IU {
     }
 
     /**
-     * Solicita los nombres de los jugadores por teclado y los almacena en una
-     * estructura de datos
-     *
-     * @return Los datos de los jugadores almacenados en la estructura de datos
-     * correspondiente
-     */
-    public Collection<String> pedirNombresJugadores() {
-        return null;
-    }
-
-    /**
      * Muestra por pantalla los datos de un jugador
      *
      * @param jugador Jugador para el cual se mostrarán los datos por pantalla
      */
-    private void mostrarJugador(Jugador jugador) {
-        System.out.println(jugador);
+    public void mostrarJugador(Jugador jugador) {
+    StringBuilder str = new StringBuilder();
+    str.append("Jugador: ").append(jugador.getNombre()).append("\n");
+    str.append("Cartas: ");
+    
+    List<Carta> mano = jugador.getMano();
+    if (!mano.isEmpty()) {
+        str.append("\n");
+        for (Carta carta : mano) {
+            str.append("\t").append(carta.toString());
+        }
+        str.append("\n");
+    } else {
+        str.append("Ninguna\n");
     }
+    
+    System.out.println(str.toString());
+}
+
 
     /**
      * Muestra por pantalla los datos de una coleccion de jugadores
@@ -88,7 +95,9 @@ public class IU {
      * @param jugadores Jugadores cuyos datos se mostrarán por pantalla
      */
     public void mostrarJugadores(Collection<Jugador> jugadores) {
-        System.out.println(jugadores);
+        for (Jugador j : jugadores){
+            System.out.println(j);
+        }
     }
 
 }

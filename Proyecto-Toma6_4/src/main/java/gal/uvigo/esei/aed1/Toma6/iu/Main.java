@@ -12,5 +12,7 @@ public class Main {
         IU iu = new IU();
         Juego toma6 = new Juego(iu);
         toma6.jugar();
-    }   
+    }
+    
+    
 }

@@ -7,7 +7,30 @@
 
 package gal.uvigo.esei.aed1.Toma6.core;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Jugador {
+    private String nombre;
+    private List<Carta> mano;
+
+    public Jugador(String nombre) {
+        this.nombre = nombre;
+        this.mano = new ArrayList<>();
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public List<Carta> getMano() {
+        return mano;
+    }
+    
     
 }
