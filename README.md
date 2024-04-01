@@ -13,6 +13,7 @@
 - Multiples of 10: 3 bueyes.
 - Multiples of 11: 5 bueyes.
 - Card 55 is special: 7 bueyes.
+- The rest 1 buey
 
 ## Setup
 - Shuffle the deck of 104 cards.
