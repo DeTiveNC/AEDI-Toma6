@@ -6,23 +6,30 @@
  */
 package gal.uvigo.esei.aed1.Toma6.core;
 
+
+import pila.EnlazadaPila;
+
 import java.util.ArrayList;
 import java.util.Random;
-import pila.EnlazadaPila;
+import java.util.Stack;
 
 /**
  * This class represents a deck of cards for the game Toma 6.
  */
 public class Baraja {
-    EnlazadaPila<Carta> baraja;
+    Stack<Carta> baraja;
 
     /**
      * Constructs a new deck of cards. The deck is shuffled upon creation.
      */
     public Baraja(){
+        this.baraja = crearBaraja();
+    }
+
+    private Stack<Carta> crearBaraja() {
         Random rm = new Random();
         ArrayList<Carta> cartas = new ArrayList<>(104);
-        this.baraja = new EnlazadaPila<>();
+        this.baraja = new Stack<>();
         // Populate the deck with 104 cards, each with a unique number and a number of oxen
         for (int i = 1; i <= 104; i++){
             int n_bueyes = 1;
@@ -45,6 +52,7 @@ public class Baraja {
             int randomNumber = rm.nextInt(cartas.size());
             baraja.push(cartas.remove(randomNumber));
         }
+        return baraja;
     }
 
     /**
