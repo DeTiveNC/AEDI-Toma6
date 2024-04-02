@@ -52,8 +52,10 @@ public class IU {
      */
     public String leeString(String msg) {
         String toret;
-        System.out.print(msg);
-        toret = teclado.nextLine();
+        do {
+            System.out.print(msg);
+            toret = teclado.nextLine();
+        } while (toret.isEmpty());
         return toret;
     }
 

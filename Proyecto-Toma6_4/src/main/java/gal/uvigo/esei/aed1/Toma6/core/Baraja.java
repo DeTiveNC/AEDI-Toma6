@@ -1,13 +1,10 @@
-/*
+/**
  * This class represents the deck of the game Toma 6, in total 104 cards, numbered from 1 to 104 with the number of oxen
  * corresponding to the value of the same (check conditions in the game statement).
  * Structure: an appropriate ADT will be used
  * Functionality: shuffle the cards, return the card located on top of the deck of cards
  */
 package gal.uvigo.esei.aed1.Toma6.core;
-
-
-import pila.EnlazadaPila;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -17,7 +14,7 @@ import java.util.Stack;
  * This class represents a deck of cards for the game Toma 6.
  */
 public class Baraja {
-    Stack<Carta> baraja;
+    private Stack<Carta> baraja; // The deck of cards
 
     /**
      * Constructs a new deck of cards. The deck is shuffled upon creation.
@@ -26,6 +23,10 @@ public class Baraja {
         this.baraja = crearBaraja();
     }
 
+    /**
+     * Creates a new deck of cards and shuffles it.
+     * @return the shuffled deck of cards
+     */
     private Stack<Carta> crearBaraja() {
         Random rm = new Random();
         ArrayList<Carta> cartas = new ArrayList<>(104);
@@ -62,5 +63,4 @@ public class Baraja {
     public Carta getCarta() {
         return baraja.pop();
     }
-
 }
