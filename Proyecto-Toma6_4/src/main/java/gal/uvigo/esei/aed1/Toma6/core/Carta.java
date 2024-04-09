@@ -39,6 +39,6 @@ public class Carta {
      */
     @Override
     public String toString() {
-        return "CARTA: " +  number + ", numero de bueyes " + num_bueyes  + "\n";
+        return "[" +  number + "," + num_bueyes  + "]";
     }
 }

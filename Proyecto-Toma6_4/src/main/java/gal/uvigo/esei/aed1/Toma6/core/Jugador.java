@@ -4,6 +4,7 @@
 package gal.uvigo.esei.aed1.Toma6.core;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -29,12 +30,48 @@ public class Jugador {
     public String getNombre() {
         return nombre;
     }
+    
+    public void añadirCarta(Carta carta) {
+        if (mano.isEmpty()) {
+         this.mano.add(carta);   
+        }
+        else {
+            this.mano.add(carta);
+            ordenarCartas();
+        }
+    }
+    
+    public void ordenarCartas() {
+    int n = mano.size();
+    for (int i = 0; i < n - 1; i++) {
+        int minIndex = i;
+        for (int j = i + 1; j < n; j++) {
+            if (mano.get(j).getNumber() < mano.get(minIndex).getNumber()) {
+                minIndex = j;
+            }
+        }
+        // Intercambiar las cartas en las posiciones i y minIndex
+        Carta temp = mano.get(minIndex);
+        mano.set(minIndex, mano.get(i));
+        mano.set(i, temp);
+    }
+}
 
-    /**
-     * Returns the cards in the player's hand.
-     * @return the cards in the player's hand
-     */
-    public List<Carta> getMano() {
-        return mano;
+
+    @Override
+    public String toString() {
+        StringBuilder str = new StringBuilder();
+        str.append("Jugador: ").append(nombre).append("\n");
+        str.append("Cartas: ");
+        if (!mano.isEmpty()) {
+            str.append("\n");
+            for (Carta carta : mano) {
+                str.append("\t").append(carta.toString());
+            }
+            str.append("\n");
+        } else {
+            str.append("Ninguna\n");
+        }
+        return str.toString();
     }
 }

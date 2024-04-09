@@ -5,12 +5,11 @@
 
 package gal.uvigo.esei.aed1.Toma6.iu;
 
-import gal.uvigo.esei.aed1.Toma6.core.Carta;
 import gal.uvigo.esei.aed1.Toma6.core.Jugador;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+
 import java.util.Scanner;
 
 public class IU {
@@ -93,23 +92,8 @@ public class IU {
      * @param jugador Jugador para el cual se mostrarán los datos por pantalla
      */
     public void mostrarJugador(Jugador jugador) {
-    StringBuilder str = new StringBuilder();
-    str.append("Jugador: ").append(jugador.getNombre()).append("\n");
-    str.append("Cartas: ");
-    
-    List<Carta> mano = jugador.getMano();
-    if (!mano.isEmpty()) {
-        str.append("\n");
-        for (Carta carta : mano) {
-            str.append("\t").append(carta.toString());
-        }
-        str.append("\n");
-    } else {
-        str.append("Ninguna\n");
+        mostrarMensaje(jugador.toString());
     }
-    
-    mostrarMensaje(str.toString());
-}
 
 
     /**
@@ -119,7 +103,7 @@ public class IU {
      */
     public void mostrarJugadores(Collection<Jugador> jugadores) {
         for (Jugador j : jugadores){
-            mostrarMensaje(j.toString());
+            mostrarJugador(j);
         }
     }
 

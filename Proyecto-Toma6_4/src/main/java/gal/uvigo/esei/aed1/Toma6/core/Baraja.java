@@ -55,6 +55,7 @@ public class Baraja {
         }
         return baraja;
     }
+    
 
     /**
      * Returns the top card from the deck.

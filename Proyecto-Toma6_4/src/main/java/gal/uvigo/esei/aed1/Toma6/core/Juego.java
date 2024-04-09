@@ -5,7 +5,6 @@
 package gal.uvigo.esei.aed1.Toma6.core;
 
 import gal.uvigo.esei.aed1.Toma6.iu.IU;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -15,7 +14,7 @@ import java.util.LinkedList;
 public class Juego {
 
     private final IU iu; // The user interface for the game
-    private LinkedList<Jugador> jugadores; // The players in the game
+    private final LinkedList<Jugador> jugadores; // The players in the game
     private Baraja baraja; // The deck of cards for the game
 
     /**
@@ -23,7 +22,6 @@ public class Juego {
      * @param iu the user interface for the game
      */
     public Juego(IU iu){
-        this.baraja = new Baraja();
         this.iu = iu;
         this.jugadores = new LinkedList<>();
     }
@@ -32,8 +30,14 @@ public class Juego {
      * Starts the game.
      */
     public void jugar(){
+        crearBaraja();
         insertarJugadores();
         repartirCartas();
+        mostrarInformacion();
+    }
+    
+    public void crearBaraja() {
+        this.baraja = new Baraja();
     }
 
     /**
@@ -52,19 +56,16 @@ public class Juego {
     public void repartirCartas() {
         for (int i = 0; i < 10; i ++) {
             for (Jugador j : jugadores) {
-                j.getMano().add(baraja.getCarta());
+                j.añadirCarta(baraja.getCarta());
             }
         }
         iu.mostrarMensaje("Las cartas han sido repartidas");
-        mostrarInformacion();
     }
 
     /**
      * Displays information about the game.
      */
     public void mostrarInformacion() {
-        for (Jugador j : jugadores) {
-            iu.mostrarJugador(j);
-        }
+        iu.mostrarJugadores(jugadores);
     }
 }
