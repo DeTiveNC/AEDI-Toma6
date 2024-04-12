@@ -12,10 +12,14 @@ import java.util.LinkedList;
  * This class represents the game Toma 6.
  */
 public class Juego {
-
-    private final IU iu; // The user interface for the game
-    private final LinkedList<Jugador> jugadores; // The players in the game
-    private Baraja baraja; // The deck of cards for the game
+    // The user interface for the game
+    private final IU iu;
+    // The players in the game
+    private final LinkedList<Jugador> jugadores;
+    // The deck of cards for the game
+    private Baraja baraja;
+    // The table for the game
+    private Mesa mesa;
 
     /**
      * Constructs a new game with the given user interface.
@@ -33,9 +37,15 @@ public class Juego {
         crearBaraja();
         insertarJugadores();
         repartirCartas();
-        mostrarInformacion();
+        mostrarInformacionJugadores();
+        crearMesa();
+        colocarCartasInicialesMesa();
+        mostrarInformacionMesa();
     }
-    
+
+    /**
+     * Creates a new deck of cards for the game.
+     */
     public void crearBaraja() {
         this.baraja = new Baraja();
     }
@@ -45,8 +55,8 @@ public class Juego {
      */
     public void insertarJugadores() {
         Collection<String> nombres = iu.pedirNombresJugadores();
-        for (int i = 0; i < nombres.size(); i++){
-            jugadores.add(new Jugador(nombres.toArray()[i].toString()));
+        for (String nombre : nombres){
+            jugadores.add(new Jugador(nombre));
         }
     }
 
@@ -56,16 +66,40 @@ public class Juego {
     public void repartirCartas() {
         for (int i = 0; i < 10; i ++) {
             for (Jugador j : jugadores) {
-                j.añadirCarta(baraja.getCarta());
+                j.anadirCarta(baraja.getCarta());
             }
         }
         iu.mostrarMensaje("Las cartas han sido repartidas");
     }
 
     /**
-     * Displays information about the game.
+     * Displays information about the players in the game.
      */
-    public void mostrarInformacion() {
+    public void mostrarInformacionJugadores() {
         iu.mostrarJugadores(jugadores);
+    }
+
+    /**
+     * Creates a new table for the game.
+     */
+    public void crearMesa(){
+        System.out.println("Creando la mesa de juego");
+        mesa = new Mesa();
+    }
+
+    /**
+     * Places the initial cards on the table.
+     */
+    public void colocarCartasInicialesMesa(){
+        for (int i = 0; i < 4; i++){
+            mesa.insertarCartas(baraja.getCarta());
+        }
+    }
+
+    /**
+     * Displays information about the table in the game.
+     */
+    public void mostrarInformacionMesa(){
+        iu.mostrarMesa(mesa);
     }
 }

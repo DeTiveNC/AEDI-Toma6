@@ -14,7 +14,8 @@ import java.util.Stack;
  * This class represents a deck of cards for the game Toma 6.
  */
 public class Baraja {
-    private Stack<Carta> baraja; // The deck of cards
+    // The deck of cards
+    private Stack<Carta> baraja;
 
     /**
      * Constructs a new deck of cards. The deck is shuffled upon creation.
@@ -33,19 +34,8 @@ public class Baraja {
         this.baraja = new Stack<>();
         // Populate the deck with 104 cards, each with a unique number and a number of oxen
         for (int i = 1; i <= 104; i++){
-            int n_bueyes = 1;
-            if (i % 5 == 0){
-                if ( i % 2 == 0) {
-                    n_bueyes++;
-                }
-                n_bueyes++;
-            }
-            if (i % 11 == 0){
-                n_bueyes += 4;
-                if (i % 5 == 0) {
-                    n_bueyes++;
-                }
-            }
+            int n_bueyes = getNBueyes(i);
+            // Add the card to the deck
             cartas.add(new Carta(i, n_bueyes));
         }
         // Shuffle the deck
@@ -55,7 +45,32 @@ public class Baraja {
         }
         return baraja;
     }
-    
+
+    /**
+     * Calculates the number of oxen for a given card number.
+     * @param i the card number
+     * @return the number of oxen for the card
+     */
+    private int getNBueyes(int i) {
+        int n_bueyes = 1;
+        // If the card number is divisible by 5, increment the number of oxen
+        if (i % 5 == 0){
+            // If the card number is even, increment the number of oxen
+            if ( i % 2 == 0) {
+                n_bueyes++;
+            }
+            n_bueyes++;
+        }
+        // If the card number is divisible by 11, increment the number of oxen by 4
+        if (i % 11 == 0){
+            n_bueyes += 4;
+            // If the card number is divisible by 5, increment the number of oxen
+            if (i % 5 == 0) {
+                n_bueyes++;
+            }
+        }
+        return n_bueyes;
+    }
 
     /**
      * Returns the top card from the deck.
@@ -63,5 +78,13 @@ public class Baraja {
      */
     public Carta getCarta() {
         return baraja.pop();
+    }
+
+    /**
+     * Pushes a card to the deck.
+     * @param carta the card to be pushed to the deck
+     */
+    public void pushCarta(Carta carta){
+        baraja.push(carta);
     }
 }

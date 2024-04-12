@@ -1,30 +1,31 @@
 /**
- * Representa la interfaz del juego Toma 6, en este proyecto va a ser una entrada/salida en modo texto 
- * Se recomienda una implementación modular.
+ * This class represents the user interface for the game Toma 6. It provides methods for reading input from the user and displaying messages.
  */
-
 package gal.uvigo.esei.aed1.Toma6.iu;
 
 import gal.uvigo.esei.aed1.Toma6.core.Jugador;
+import gal.uvigo.esei.aed1.Toma6.core.Mesa;
 
 import java.util.ArrayList;
 import java.util.Collection;
-
 import java.util.Scanner;
 
 public class IU {
 
+    // Scanner object for reading input from the user
     private final Scanner teclado;
 
+    /**
+     * Constructs a new user interface.
+     */
     public IU() {
         teclado = new Scanner(System.in);
     }
 
     /**
-     * Lee un número de teclado
-     *
-     * @param msg El mensaje a visualizar.
-     * @return El numero como entero
+     * Reads an integer from the user.
+     * @param msg the message to display to the user
+     * @return the integer entered by the user
      */
     public int leeNum(String msg) {
         boolean repite;
@@ -44,67 +45,69 @@ public class IU {
     }
 
     /**
-     * Lee un texto de teclado
-     *
-     * @param msg El mensaje a utilizar
-     * @return El texto como String
+     * Reads a string from the user.
+     * @param msg the message to display to the user
+     * @return the string entered by the user
      */
     public String leeString(String msg) {
         String toret;
-        do {
-            System.out.print(msg);
-            toret = teclado.nextLine();
-        } while (toret.isEmpty());
+        System.out.print(msg);
+        toret = teclado.nextLine();
         return toret;
     }
 
     /**
-     * Muestra un mensaje por pantalla
-     *
-     * @param msg El mensaje a mostrar
+     * Displays a message to the user.
+     * @param msg the message to display
      */
     public void mostrarMensaje(String msg) {
         System.out.println(msg);
     }
 
     /**
-     * Solicita los nombres de los jugadores por teclado y los almacena en una
-     * estructura de datos
-     *
-     * @return Los datos de los jugadores almacenados en la estructura de datos
-     * correspondiente
+     * Asks the user for the names of the players and stores them in a collection.
+     * @return a collection of player names
      */
     public Collection<String> pedirNombresJugadores() {
         int numJugadores;
+        String nombreJugador;
         do {
             numJugadores = leeNum("Introduce el número de jugadores: ");
         } while (numJugadores < 2 || numJugadores > 10);
         Collection<String> nombres = new ArrayList<>(numJugadores);
         for (int i = 0; i < numJugadores; i++) {
-            nombres.add(leeString("Introduce el nombre del jugador " + (i + 1) + ": "));
+            do {
+                nombreJugador = leeString("Introduce el nombre del jugador " + (i + 1) + ": ");
+            } while (nombreJugador.isEmpty() || nombres.contains(nombreJugador));
+            nombres.add(nombreJugador);
         }
         return nombres;
     }
 
     /**
-     * Muestra por pantalla los datos de un jugador
-     *
-     * @param jugador Jugador para el cual se mostrarán los datos por pantalla
+     * Displays information about a player to the user.
+     * @param jugador the player whose information is to be displayed
      */
     public void mostrarJugador(Jugador jugador) {
         mostrarMensaje(jugador.toString());
     }
 
-
     /**
-     * Muestra por pantalla los datos de una coleccion de jugadores
-     *
-     * @param jugadores Jugadores cuyos datos se mostrarán por pantalla
+     * Displays information about a collection of players to the user.
+     * @param jugadores the players whose information is to be displayed
      */
     public void mostrarJugadores(Collection<Jugador> jugadores) {
         for (Jugador j : jugadores){
             mostrarJugador(j);
         }
+    }
+
+    /**
+     * Displays information about the game table to the user.
+     * @param mesa the game table whose information is to be displayed
+     */
+    public void mostrarMesa(Mesa mesa){
+        mostrarMensaje(mesa.toString());
     }
 
 }

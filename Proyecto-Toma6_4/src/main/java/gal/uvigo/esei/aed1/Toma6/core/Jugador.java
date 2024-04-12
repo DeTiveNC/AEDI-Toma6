@@ -1,18 +1,19 @@
-/*
+/**
  * This class represents a player in the game Toma 6. Each player is identified by their name and the cards in their hand.
  */
 package gal.uvigo.esei.aed1.Toma6.core;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * This class represents a player in the game Toma 6.
  */
 public class Jugador {
-    private final String nombre; // The name of the player
-    private List<Carta> mano; // The cards in the player's hand
+    // The name of the player
+    private final String nombre;
+    // The cards in the player's hand
+    private List<Carta> mano;
 
     /**
      * Constructs a new player with the given name. The player's hand is initially empty.
@@ -30,34 +31,41 @@ public class Jugador {
     public String getNombre() {
         return nombre;
     }
-    
-    public void añadirCarta(Carta carta) {
-        if (mano.isEmpty()) {
-         this.mano.add(carta);   
-        }
-        else {
-            this.mano.add(carta);
+
+    /**
+     * Adds a card to the player's hand and sorts the hand if it's not empty.
+     * @param carta the card to be added to the player's hand
+     */
+    public void anadirCarta(Carta carta) {
+        this.mano.add(carta);
+        if (!mano.isEmpty()) {
             ordenarCartas();
         }
     }
-    
+
+    /**
+     * Sorts the cards in the player's hand in ascending order.
+     */
     public void ordenarCartas() {
-    int n = mano.size();
-    for (int i = 0; i < n - 1; i++) {
-        int minIndex = i;
-        for (int j = i + 1; j < n; j++) {
-            if (mano.get(j).getNumber() < mano.get(minIndex).getNumber()) {
-                minIndex = j;
+        int n = mano.size();
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+            for (int j = i + 1; j < n; j++) {
+                if (mano.get(j).number() < mano.get(minIndex).number()) {
+                    minIndex = j;
+                }
             }
+            // Swap the cards at positions i and minIndex
+            Carta temp = mano.get(minIndex);
+            mano.set(minIndex, mano.get(i));
+            mano.set(i, temp);
         }
-        // Intercambiar las cartas en las posiciones i y minIndex
-        Carta temp = mano.get(minIndex);
-        mano.set(minIndex, mano.get(i));
-        mano.set(i, temp);
     }
-}
 
-
+    /**
+     * Returns a string representation of the player, including their name and the cards in their hand.
+     * @return a string representation of the player
+     */
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder();
