@@ -31,7 +31,7 @@ public class Mesa {
     /**
      * Inserts a card into the table. If all rows have four cards, the card is inserted into the row with the smallest difference
      * between the card's number and the last card's number in the row. If no such row exists, the card is not inserted and the method
-     * returns false. If not all rows have four cards, the card is inserted into the first empty row.
+     * returns false or if the row has all the cards is going to return false. If not all rows have four cards, the card is inserted into the first empty row.
      * @param carta the card to be inserted
      * @return true if the card was inserted, false otherwise
      */
@@ -40,10 +40,15 @@ public class Mesa {
         if (todasLasFilasTienenCuatroCartas()) {
             int index = filaPosibleAOcupar(carta);
             if (index == -1) {
-                System.out.println("No hay fila adecuada para colocar la carta");
+                System.out.println("Carta demasiado pequeña");
                 insertado = false;
             } else {
-                mesa.get(index).add(carta);
+                if (mesa.get(index).size() < 5){
+                    mesa.get(index).add(carta);
+                } else {
+                    System.out.println("Fila ocupada");
+                    insertado = false;
+                }
             }
         } else {
             inicializarCartasIniciales(carta);
