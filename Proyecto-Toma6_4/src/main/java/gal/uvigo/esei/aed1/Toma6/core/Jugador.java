@@ -31,6 +31,9 @@ public class Jugador {
     public String getNombre() {
         return nombre;
     }
+    public List<Carta> getMano() {
+        return mano;
+    }
 
     /**
      * Adds a card to the player's hand and sorts the hand if it's not empty.
