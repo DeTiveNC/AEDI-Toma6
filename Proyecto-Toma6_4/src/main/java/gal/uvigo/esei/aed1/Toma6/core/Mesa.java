@@ -3,6 +3,8 @@
  */
 package gal.uvigo.esei.aed1.Toma6.core;
 
+import gal.uvigo.esei.aed1.Toma6.iu.IU;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -10,11 +12,14 @@ import java.util.List;
 public class Mesa {
     // The table, represented as a list of linked lists of cards
     private List<LinkedList<Carta>> mesa;
+    private final IU iu;
+    private Baraja baraja;
 
     /**
      * Constructs a new table. The table is initialized upon creation.
      */
     public Mesa(){
+        iu = new IU();
         crearMesa();
     }
 
@@ -40,13 +45,15 @@ public class Mesa {
         if (todasLasFilasTienenCuatroCartas()) {
             int index = filaPosibleAOcupar(carta);
             if (index == -1) {
-                System.out.println("Carta demasiado pequeña");
+                iu.mostrarMensaje("Carta demasiado pequeña");
+                baraja.pushCarta(carta);
                 insertado = false;
             } else {
                 if (mesa.get(index).size() < 5){
                     mesa.get(index).add(carta);
                 } else {
-                    System.out.println("Fila ocupada");
+                    iu.mostrarMensaje("Fila ocupada");
+                    baraja.pushCarta(carta);
                     insertado = false;
                 }
             }

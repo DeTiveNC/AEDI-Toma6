@@ -3,6 +3,8 @@
  */
 package gal.uvigo.esei.aed1.Toma6.core;
 
+import gal.uvigo.esei.aed1.Toma6.exceptions.NoCartaExistException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,9 +33,6 @@ public class Jugador {
     public String getNombre() {
         return nombre;
     }
-    public List<Carta> getMano() {
-        return mano;
-    }
 
     /**
      * Adds a card to the player's hand and sorts the hand if it's not empty.
@@ -41,15 +40,13 @@ public class Jugador {
      */
     public void anadirCarta(Carta carta) {
         this.mano.add(carta);
-        if (!mano.isEmpty()) {
-            ordenarCartas();
-        }
+        ordenarCartas();
     }
 
     /**
      * Sorts the cards in the player's hand in ascending order.
      */
-    public void ordenarCartas() {
+    private void ordenarCartas() {
         int n = mano.size();
         for (int i = 0; i < n - 1; i++) {
             int minIndex = i;
@@ -63,6 +60,13 @@ public class Jugador {
             mano.set(minIndex, mano.get(i));
             mano.set(i, temp);
         }
+    }
+
+    /**
+     * Eliminates a card from the list mano in a certain position
+     */
+    public Carta eliminarCartaporPosicion(int index){
+        return this.mano.remove(index - 1);
     }
 
     /**

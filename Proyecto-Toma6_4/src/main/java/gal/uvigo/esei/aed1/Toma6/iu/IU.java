@@ -3,11 +3,13 @@
  */
 package gal.uvigo.esei.aed1.Toma6.iu;
 
+import gal.uvigo.esei.aed1.Toma6.core.Carta;
 import gal.uvigo.esei.aed1.Toma6.core.Jugador;
 import gal.uvigo.esei.aed1.Toma6.core.Mesa;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class IU {
@@ -108,6 +110,10 @@ public class IU {
      */
     public void mostrarMesa(Mesa mesa){
         mostrarMensaje(mesa.toString());
+    }
+
+    public HashMap<Jugador, Carta>  cartasEscogidasOrden(Collection<Jugador> jugadors){
+        return new HashMap<>();
     }
 
 }
