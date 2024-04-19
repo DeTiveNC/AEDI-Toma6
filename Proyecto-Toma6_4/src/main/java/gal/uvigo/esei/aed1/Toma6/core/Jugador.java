@@ -3,8 +3,6 @@
  */
 package gal.uvigo.esei.aed1.Toma6.core;
 
-import gal.uvigo.esei.aed1.Toma6.exceptions.NoCartaExistException;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,9 +59,15 @@ public class Jugador {
             mano.set(i, temp);
         }
     }
+    
+    public int tamañoMano(){
+        return this.mano.size();
+    }
 
     /**
      * Eliminates a card from the list mano in a certain position
+     * @param index
+     * @return 
      */
     public Carta eliminarCartaporPosicion(int index){
         return this.mano.remove(index - 1);

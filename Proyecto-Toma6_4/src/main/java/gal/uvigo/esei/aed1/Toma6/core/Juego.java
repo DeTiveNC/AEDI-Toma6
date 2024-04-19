@@ -44,7 +44,11 @@ public class Juego {
         crearMesa();
         colocarCartasInicialesMesa();
         mostrarInformacionMesa();
-        ordenJugadores();
+        for(int i = 0; i < 10; i++){
+            iu.mostrarMensaje("Ronda " + (i+1)+ ":");
+            ronda();
+        }
+        iu.mostrarMensaje("Partida Acabada");
     }
 
     /**
@@ -96,7 +100,7 @@ public class Juego {
      */
     private void colocarCartasInicialesMesa() {
         for (int i = 0; i < 4; i++) {
-            mesa.insertarCartas(baraja.getCarta());
+            mesa.insertarCartas(baraja.getCarta(),this.baraja);
         }
         iu.mostrarMensaje("Cartas iniciales estan puestas en la mesa");
     }
@@ -108,7 +112,25 @@ public class Juego {
         iu.mostrarMesa(mesa);
     }
     
-    private void ordenJugadores(){
+    private void ronda() {
         cartasEscogidas = iu.cartasEscogidasOrden(jugadores);
+        List<Map.Entry<Jugador, Carta>> listaOrdenada = new ArrayList<>(cartasEscogidas.entrySet());
+        
+        // Utilizamos una lambda para comparar los valores de las cartas directamente
+        listaOrdenada.sort((entry1, entry2) -> entry1.getValue().number() - entry2.getValue().number());
+
+        LinkedHashMap<Jugador, Carta> cartasOrdenadas = new LinkedHashMap<>();
+        for (Map.Entry<Jugador, Carta> entrada : listaOrdenada) {
+            cartasOrdenadas.put(entrada.getKey(), entrada.getValue());
+        }
+        // Ahora cartasOrdenadas tiene las cartas ordenadas por el valor de la Carta
+        for (Map.Entry<Jugador, Carta> entrada : cartasOrdenadas.entrySet()) {
+            Carta carta = entrada.getValue();
+            boolean resultado = mesa.insertarCartas(carta, this.baraja);
+            if (!resultado) {
+                System.out.println("No se pudo insertar la carta de " + entrada.getKey().getNombre() + " en la mesa.");
+            }
+        }
+        iu.mostrarMesa(mesa);
     }
 }

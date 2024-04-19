@@ -10,6 +10,7 @@ import gal.uvigo.esei.aed1.Toma6.core.Mesa;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class IU {
@@ -112,8 +113,17 @@ public class IU {
         mostrarMensaje(mesa.toString());
     }
 
-    public HashMap<Jugador, Carta>  cartasEscogidasOrden(Collection<Jugador> jugadors){
-        return new HashMap<>();
+    public HashMap<Jugador, Carta>  cartasEscogidasOrden(Collection<Jugador> jugadores){
+        HashMap<Jugador, Carta>  hashCartas  = new HashMap<>();
+        int index;
+        for (Jugador j : jugadores){
+            mostrarJugador(j);
+            do {
+                index = leeNum("Escoge una carta por indice (de 1 a " + j.tamañoMano() + ")" +  ":");
+            } while (1 > index || index > j.tamañoMano());
+            hashCartas.put(j, j.eliminarCartaporPosicion(index));
+        }
+        return hashCartas;
     }
 
 }

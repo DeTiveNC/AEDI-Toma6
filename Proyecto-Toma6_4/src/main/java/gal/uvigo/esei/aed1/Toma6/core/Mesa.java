@@ -13,7 +13,6 @@ public class Mesa {
     // The table, represented as a list of linked lists of cards
     private List<LinkedList<Carta>> mesa;
     private final IU iu;
-    private Baraja baraja;
 
     /**
      * Constructs a new table. The table is initialized upon creation.
@@ -38,14 +37,14 @@ public class Mesa {
      * between the card's number and the last card's number in the row. If no such row exists, the card is not inserted and the method
      * returns false or if the row has all the cards is going to return false. If not all rows have four cards, the card is inserted into the first empty row.
      * @param carta the card to be inserted
+     * @param baraja
      * @return true if the card was inserted, false otherwise
      */
-    public boolean insertarCartas(Carta carta) {
+    public boolean insertarCartas(Carta carta, Baraja baraja) {
         boolean insertado = true;
         if (todasLasFilasTienenCuatroCartas()) {
             int index = filaPosibleAOcupar(carta);
             if (index == -1) {
-                iu.mostrarMensaje("Carta demasiado pequeña");
                 baraja.pushCarta(carta);
                 insertado = false;
             } else {
