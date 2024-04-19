@@ -59,7 +59,11 @@ public class Jugador {
             mano.set(i, temp);
         }
     }
-    
+
+    /**
+     * Returns the size of cards in the player's hand.
+     * @return the size of cards in the player's hand
+     */
     public int tamañoMano(){
         return this.mano.size();
     }

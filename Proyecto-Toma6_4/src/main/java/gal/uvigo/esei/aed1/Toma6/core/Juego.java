@@ -21,6 +21,7 @@ public class Juego {
     private Baraja baraja;
     // The table for the game
     private Mesa mesa;
+    // The cards chosen by the players in a round
     private HashMap<Jugador, Carta> cartasEscogidas;
 
     /**
@@ -111,11 +112,15 @@ public class Juego {
     private void mostrarInformacionMesa() {
         iu.mostrarMesa(mesa);
     }
-    
+
+    /**
+     * Executes a round of the game. Each player chooses a card, and the cards are placed on the table in ascending order.
+     * If a card cannot be placed on the table, a message is displayed.
+     */
     private void ronda() {
         cartasEscogidas = iu.cartasEscogidasOrden(jugadores);
         List<Map.Entry<Jugador, Carta>> listaOrdenada = new ArrayList<>(cartasEscogidas.entrySet());
-        
+
         // Utilizamos una lambda para comparar los valores de las cartas directamente
         listaOrdenada.sort((entry1, entry2) -> entry1.getValue().number() - entry2.getValue().number());
 
@@ -123,7 +128,7 @@ public class Juego {
         for (Map.Entry<Jugador, Carta> entrada : listaOrdenada) {
             cartasOrdenadas.put(entrada.getKey(), entrada.getValue());
         }
-        // Ahora cartasOrdenadas tiene las cartas ordenadas por el valor de la Carta
+        // Now cartasOrdenadas has the cards ordered by the value of the Card
         for (Map.Entry<Jugador, Carta> entrada : cartasOrdenadas.entrySet()) {
             Carta carta = entrada.getValue();
             boolean resultado = mesa.insertarCartas(carta, this.baraja);

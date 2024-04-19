@@ -25,7 +25,7 @@ public class Mesa {
     /**
      * Initializes the table with four empty linked lists of cards.
      */
-    public void crearMesa(){
+    private void crearMesa(){
         mesa = new ArrayList<>(4);
         for (int i = 0; i < 4; i++){
             mesa.add(new LinkedList<>());
