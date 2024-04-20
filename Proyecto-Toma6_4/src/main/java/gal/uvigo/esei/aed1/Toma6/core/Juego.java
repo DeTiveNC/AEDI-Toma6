@@ -122,7 +122,7 @@ public class Juego {
         List<Map.Entry<Jugador, Carta>> listaOrdenada = new ArrayList<>(cartasEscogidas.entrySet());
 
         // Utilizamos una lambda para comparar los valores de las cartas directamente
-        listaOrdenada.sort((entry1, entry2) -> entry1.getValue().number() - entry2.getValue().number());
+        listaOrdenada.sort((jugadorAnterior, jugadorPosterior) -> jugadorAnterior.getValue().number() - jugadorPosterior.getValue().number());
 
         LinkedHashMap<Jugador, Carta> cartasOrdenadas = new LinkedHashMap<>();
         for (Map.Entry<Jugador, Carta> entrada : listaOrdenada) {
