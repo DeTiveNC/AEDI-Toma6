@@ -10,7 +10,6 @@ import gal.uvigo.esei.aed1.Toma6.core.Mesa;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.Map.Entry;
 import java.util.Scanner;
 
 public class IU {
