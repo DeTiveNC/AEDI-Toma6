@@ -5,6 +5,7 @@ package gal.uvigo.esei.aed1.Toma6.core;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Stack;
 
 /**
  * This class represents a player in the game Toma 6.
@@ -14,6 +15,7 @@ public class Jugador {
     private final String nombre;
     // The cards in the player's hand
     private List<Carta> mano;
+    private Stack<Carta> monto;
 
     /**
      * Constructs a new player with the given name. The player's hand is initially empty.
@@ -22,6 +24,7 @@ public class Jugador {
     public Jugador(String nombre) {
         this.nombre = nombre;
         this.mano = new ArrayList<>();
+        this.monto = new Stack<>();
     }
 
     /**
@@ -30,6 +33,12 @@ public class Jugador {
      */
     public String getNombre() {
         return nombre;
+    }
+    
+    public int getContadorBueyes(){
+        int contadorBueyes = 0;
+        while(!monto.empty()) contadorBueyes += monto.pop().num_bueyes();
+        return contadorBueyes;
     }
 
     /**
@@ -66,6 +75,11 @@ public class Jugador {
      */
     public int tamañoMano(){
         return this.mano.size();
+    }
+    
+public void comerCartas(List<Carta> cartasAComer){
+        while(!cartasAComer.isEmpty())
+            monto.push(cartasAComer.remove(0));
     }
 
     /**

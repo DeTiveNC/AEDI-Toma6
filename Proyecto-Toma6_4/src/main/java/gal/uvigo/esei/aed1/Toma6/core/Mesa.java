@@ -3,82 +3,67 @@
  */
 package gal.uvigo.esei.aed1.Toma6.core;
 
-import gal.uvigo.esei.aed1.Toma6.iu.IU;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Mesa {
+
     // The table, represented as a list of linked lists of cards
     private List<LinkedList<Carta>> mesa;
-    private final IU iu;
 
     /**
      * Constructs a new table. The table is initialized upon creation.
      */
-    public Mesa(){
-        iu = new IU();
+    public Mesa() {
         crearMesa();
     }
 
     /**
      * Initializes the table with four empty linked lists of cards.
      */
-    private void crearMesa(){
+    private void crearMesa() {
         mesa = new ArrayList<>(4);
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < 4; i++) {
             mesa.add(new LinkedList<>());
         }
     }
 
     /**
-     * Inserts a card into the table. If all rows have four cards, the card is inserted into the row with the smallest difference
-     * between the card's number and the last card's number in the row. If no such row exists, the card is not inserted and the method
-     * returns false or if the row has all the cards is going to return false. If not all rows have four cards, the card is inserted into the first empty row.
+     * Inserts a card into the table. If all rows have four cards, the card is
+     * inserted into the row with the smallest difference between the card's
+     * number and the last card's number in the row. If no such row exists, the
+     * card is not inserted and the method returns false or if the row has all
+     * the cards is going to return false. If not all rows have four cards, the
+     * card is inserted into the first empty row.
+     *
      * @param carta the card to be inserted
-     * @param baraja
      * @return true if the card was inserted, false otherwise
      */
-    public boolean insertarCartas(Carta carta, Baraja baraja) {
-        boolean insertado = true;
-        if (todasLasFilasTienenCuatroCartas()) {
-            int index = filaPosibleAOcupar(carta);
-            if (index == -1) {
-                baraja.pushCarta(carta);
-                insertado = false;
-            } else {
-                if (mesa.get(index).size() < 5){
-                    mesa.get(index).add(carta);
-                } else {
-                    iu.mostrarMensaje("Fila ocupada");
-                    baraja.pushCarta(carta);
-                    insertado = false;
-                }
-            }
+    public List<Carta> insertarCartas(Carta carta) {
+        List<Carta> cartasComidas = new ArrayList<>();
+        int index = filaPosibleAOcupar(carta);
+        if (index == -1) { //aqui no puedes colocar carta en ninguna fila pq es demasiado pequeña 
+            return cartasComidas;
         } else {
-            inicializarCartasIniciales(carta);
+            if (mesa.get(index).size() < 5) {  //menor q 5 se puede insertar
+                mesa.get(index).add(carta);
+            } else {  // mayor de 5
+                cartasComidas.addAll(mesa.get(index));
+                mesa.get(index).clear();
+                mesa.get(index).add(carta);
+                return cartasComidas;
+            }
         }
-        return insertado;
-    }
-
-    /**
-     * Checks if all rows have four cards.
-     * @return true if all rows have four cards, false otherwise
-     */
-    private boolean todasLasFilasTienenCuatroCartas() {
-        boolean cartasEnFila = false;
-        for (LinkedList<Carta> fila : mesa) {
-            cartasEnFila = !fila.isEmpty();
-        }
-        return cartasEnFila;
+        return null;
     }
 
     /**
      * Inserts the card into the first empty row.
+     *
      * @param carta the card to be inserted
      */
-    private void inicializarCartasIniciales(Carta carta) {
+    public void inicializarCartasIniciales(Carta carta) {
         boolean agregada = false;
         for (LinkedList<Carta> fila : mesa) {
             if (fila.isEmpty() && !agregada) {
@@ -89,7 +74,9 @@ public class Mesa {
     }
 
     /**
-     * Finds the row with the smallest difference between the card's number and the last card's number in the row.
+     * Finds the row with the smallest difference between the card's number and
+     * the last card's number in the row.
+     *
      * @param carta the card to be inserted
      * @return the index of the row, or -1 if no such row exists
      */
@@ -109,17 +96,35 @@ public class Mesa {
         }
         return indexMejorFila;
     }
-
+    
+    public int tamaño(){
+        return this.mesa.size();
+    }
+    
+    public List<Carta> modificacionFila(int index, Carta carta) {
+        List<Carta> filaEscogida = this.mesa.get(index);
+        this.mesa.get(index).clear();
+        if (this.mesa.get(index).isEmpty()) {
+            System.out.println("asdsadsdfgfsdadfssdfdsf");
+        }
+        this.mesa.get(index).add(carta);
+        if (this.mesa.get(index).isEmpty()) {
+            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxx");
+        }
+        return filaEscogida;
+    }
     /**
-     * Returns a string representation of the table, including all cards in all rows.
+     * Returns a string representation of the table, including all cards in all
+     * rows.
+     *
      * @return a string representation of the table
      */
     @Override
-    public String toString(){
+    public String toString() {
         StringBuilder str = new StringBuilder();
-        for (int i = 0; i < mesa.size(); i++){
-            str.append("Fila ").append(i+1).append(": ");
-            for (Carta carta : mesa.get(i)){
+        for (int i = 0; i < mesa.size(); i++) {
+            str.append("Fila ").append(i + 1).append(": ");
+            for (Carta carta : mesa.get(i)) {
                 str.append(carta.toString()).append(" ");
             }
             str.append("\n");

@@ -9,7 +9,8 @@ import gal.uvigo.esei.aed1.Toma6.core.Mesa;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Scanner;
 
 public class IU {
@@ -26,6 +27,7 @@ public class IU {
 
     /**
      * Reads an integer from the user.
+     *
      * @param msg the message to display to the user
      * @return the integer entered by the user
      */
@@ -48,6 +50,7 @@ public class IU {
 
     /**
      * Reads a string from the user.
+     *
      * @param msg the message to display to the user
      * @return the string entered by the user
      */
@@ -60,6 +63,7 @@ public class IU {
 
     /**
      * Displays a message to the user.
+     *
      * @param msg the message to display
      */
     public void mostrarMensaje(String msg) {
@@ -67,7 +71,9 @@ public class IU {
     }
 
     /**
-     * Asks the user for the names of the players and stores them in a collection.
+     * Asks the user for the names of the players and stores them in a
+     * collection.
+     *
      * @return a collection of player names
      */
     public Collection<String> pedirNombresJugadores() {
@@ -88,6 +94,7 @@ public class IU {
 
     /**
      * Displays information about a player to the user.
+     *
      * @param jugador the player whose information is to be displayed
      */
     public void mostrarJugador(Jugador jugador) {
@@ -96,33 +103,45 @@ public class IU {
 
     /**
      * Displays information about a collection of players to the user.
+     *
      * @param jugadores the players whose information is to be displayed
      */
     public void mostrarJugadores(Collection<Jugador> jugadores) {
-        for (Jugador j : jugadores){
+        for (Jugador j : jugadores) {
             mostrarJugador(j);
         }
     }
 
     /**
      * Displays information about the game table to the user.
+     *
      * @param mesa the game table whose information is to be displayed
      */
-    public void mostrarMesa(Mesa mesa){
+    public void mostrarMesa(Mesa mesa) {
         mostrarMensaje(mesa.toString());
     }
 
-    public HashMap<Jugador, Carta>  cartasEscogidasOrden(Collection<Jugador> jugadores){
-        HashMap<Jugador, Carta>  hashCartas  = new HashMap<>();
+    public List<Map.Entry<Jugador, Carta>> cartasEscogidasOrden(Collection<Jugador> jugadores) {
+        List<Map.Entry<Jugador, Carta>> hashCartas = new ArrayList<>();
+        Map.Entry<Jugador, Carta> seleccion;
         int index;
-        for (Jugador j : jugadores){
+        for (Jugador j : jugadores) {
             mostrarJugador(j);
             do {
-                index = leeNum("Escoge una carta por indice (de 1 a " + j.tamañoMano() + ")" +  ":");
+                index = leeNum("Escoge una carta por indice (de 1 a " + j.tamañoMano() + ")" + ":");
             } while (1 > index || index > j.tamañoMano());
-            hashCartas.put(j, j.eliminarCartaporPosicion(index));
+            seleccion = Map.entry(j, j.eliminarCartaporPosicion(index));
+            hashCartas.add(seleccion);
         }
         return hashCartas;
     }
 
+    public int obtenerFilaMesa(Mesa mesa) {
+        int index;
+        mostrarMesa(mesa);
+        do {
+            index = leeNum("Escoge una carta por indice (de 1 a " + mesa.tamaño() + ")" + ":");
+        } while (1 > index || index > mesa.tamaño());
+        return index-1;
+    }
 }

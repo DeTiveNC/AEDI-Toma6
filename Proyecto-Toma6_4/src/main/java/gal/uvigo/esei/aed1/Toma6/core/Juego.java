@@ -22,7 +22,7 @@ public class Juego {
     // The table for the game
     private Mesa mesa;
     // The cards chosen by the players in a round
-    private HashMap<Jugador, Carta> cartasEscogidas;
+    private List<Map.Entry<Jugador, Carta>> cartasEscogidas;
 
     /**
      * Constructs a new game with the given user interface.
@@ -38,17 +38,21 @@ public class Juego {
      * Starts the game.
      */
     public void jugar() {
-        crearBaraja();
+        boolean acabada = false;
         insertarJugadores();
-        repartirCartas();
-        mostrarInformacionJugadores();
-        crearMesa();
-        colocarCartasInicialesMesa();
-        mostrarInformacionMesa();
-        for(int i = 0; i < 10; i++){
-            iu.mostrarMensaje("Ronda " + (i+1)+ ":");
-            ronda();
-        }
+        do {
+            crearBaraja();
+            repartirCartas();
+            mostrarInformacionJugadores();
+            crearMesa();
+            colocarCartasInicialesMesa();
+            mostrarInformacionMesa();
+            for (int i = 0; i < 10; i++) {
+                iu.mostrarMensaje("Ronda " + (i + 1) + ":");
+                ronda();
+            }
+            acabada = finalizacionPartida();
+        } while (acabada != true);
         iu.mostrarMensaje("Partida Acabada");
     }
 
@@ -101,7 +105,7 @@ public class Juego {
      */
     private void colocarCartasInicialesMesa() {
         for (int i = 0; i < 4; i++) {
-            mesa.insertarCartas(baraja.getCarta(),this.baraja);
+            mesa.inicializarCartasIniciales(baraja.getCarta());
         }
         iu.mostrarMensaje("Cartas iniciales estan puestas en la mesa");
     }
@@ -114,28 +118,68 @@ public class Juego {
     }
 
     /**
-     * Executes a round of the game. Each player chooses a card, and the cards are placed on the table in ascending order.
-     * If a card cannot be placed on the table, a message is displayed.
+     * Executes a round of the game. Each player chooses a card, and the cards
+     * are placed on the table in ascending order. If a card cannot be placed on
+     * the table, a message is displayed.
      */
     private void ronda() {
         cartasEscogidas = iu.cartasEscogidasOrden(jugadores);
-        List<Map.Entry<Jugador, Carta>> listaOrdenada = new ArrayList<>(cartasEscogidas.entrySet());
 
         // Utilizamos una lambda para comparar los valores de las cartas directamente
-        listaOrdenada.sort((jugadorAnterior, jugadorPosterior) -> jugadorAnterior.getValue().number() - jugadorPosterior.getValue().number());
+        cartasEscogidas.sort((jugadorAnterior, jugadorPosterior) -> jugadorAnterior.getValue().number() - jugadorPosterior.getValue().number());
 
-        LinkedHashMap<Jugador, Carta> cartasOrdenadas = new LinkedHashMap<>();
-        for (Map.Entry<Jugador, Carta> entrada : listaOrdenada) {
-            cartasOrdenadas.put(entrada.getKey(), entrada.getValue());
-        }
         // Now cartasOrdenadas has the cards ordered by the value of the Card
-        for (Map.Entry<Jugador, Carta> entrada : cartasOrdenadas.entrySet()) {
+        for (Map.Entry<Jugador, Carta> entrada : cartasEscogidas) {
             Carta carta = entrada.getValue();
-            boolean resultado = mesa.insertarCartas(carta, this.baraja);
-            if (!resultado) {
-                System.out.println("No se pudo insertar la carta de " + entrada.getKey().getNombre() + " en la mesa.");
+            iu.mostrarMensaje(entrada.getKey() + "pone carta: " + entrada.getValue());
+            List<Carta> resultado = mesa.insertarCartas(carta);
+            System.out.println(resultado);
+            if (resultado != null) {
+                if (resultado.isEmpty()) {
+                    iu.mostrarMensaje(entrada.getKey() + " necesitas indicar fila a poner la carta");
+                    resultado = insertarFilaEspecifica(carta);
+                    iu.mostrarMesa(mesa);
+                }
+                entrada.getKey().comerCartas(resultado);
             }
         }
         iu.mostrarMesa(mesa);
+    }
+
+    private List<Carta> insertarFilaEspecifica(Carta carta) {
+        int index = iu.obtenerFilaMesa(mesa);
+        List<Carta> result = mesa.modificacionFila(index, carta);
+        return result;
+    }
+
+    private boolean finalizacionPartida() {
+        boolean terminado = false;
+
+        int[] ranking = new int[jugadores.size()]; // [23,24,78,12]
+        for (int i = 0; i < jugadores.size(); i++) {
+            ranking[i] = jugadores.get(i).getContadorBueyes();
+            if (ranking[i] >= 66) {
+                terminado = true;
+            }
+        }
+        if (terminado == true) {
+            int menor = ranking[0];
+            for (int j = 1; j < ranking.length; j++) {
+                if (menor > ranking[j]) {
+                    menor = ranking[j];
+                }
+            }
+            ArrayList<Integer> ganadores = new ArrayList<>();
+            for (int k = 0; k < ranking.length; k++) {
+                if (menor == ranking[k]) {
+                    ganadores.add(k);
+                }
+            }
+            for (Integer k : ganadores) {
+                iu.mostrarMensaje("Ganador/es : ");
+                iu.mostrarJugador(jugadores.get(k));
+            }
+        }
+        return terminado;
     }
 }
