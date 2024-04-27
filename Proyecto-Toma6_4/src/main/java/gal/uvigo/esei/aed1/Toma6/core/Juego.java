@@ -40,7 +40,7 @@ public class Juego {
      * Starts the game.
      */
     public void jugar() {
-        boolean acabada = false;
+        boolean acabada;
         insertarJugadores();
         do {
             crearBaraja();
@@ -54,7 +54,7 @@ public class Juego {
                 ronda();
             }
             acabada = finalizacionPartida();
-        } while (acabada != true);
+        } while (!acabada);
         iu.mostrarMensaje("Partida Acabada");
     }
 
@@ -129,7 +129,7 @@ public class Juego {
         cartasEscogidas = iu.cartasEscogidasOrden(jugadores);
 
         // Utilizamos una lambda para comparar los valores de las cartas directamente
-        cartasEscogidas.sort((jugadorAnterior, jugadorPosterior) -> jugadorAnterior.getValue().number() - jugadorPosterior.getValue().number());
+        cartasEscogidas.sort(Comparator.comparingInt(jugadorAnterior -> jugadorAnterior.getValue().number()));
 
         // Now cartasOrdenadas has the cards ordered by the value of the Card
         for (Map.Entry<Jugador, Carta> entrada : cartasEscogidas) {
@@ -144,28 +144,36 @@ public class Juego {
                 }
                 entrada.getKey().comerCartas(resultado);
             }
+            iu.mostrarMesa(mesa);
         }
         iu.mostrarMesa(mesa);
     }
 
+    /**
+     * Inserts a card into a specific row on the table.
+     * @param carta the card to be inserted
+     * @return the list of cards that were replaced by the new card
+     */
     private List<Carta> insertarFilaEspecifica(Carta carta) {
         int index = iu.obtenerFilaMesa(mesa);
-        List<Carta> result = mesa.modificacionFila(index, carta);
-        return result;
+        return mesa.modificacionFila(index, carta);
     }
 
-    
+    /**
+     * Determines if the game is over. The game is over if any player has 66 or more bulls.
+     * @return true if the game is over, false otherwise
+     */
     private boolean finalizacionPartida() {
         boolean terminado = false;
-        
+
         for (int i = 0; i < jugadores.size(); i++) {
             ranking[i] = jugadores.get(i).getContadorBueyes();
-            if (ranking[i] >= 10) {
+            if (ranking[i] >= 66) {
                 terminado = true;
             }
             System.out.println("El jugador " + jugadores.get(i).getNombre() + " tiene " + ranking[i] + " bueyes");
         }
-        if (terminado == true) {
+        if (terminado) {
             int menor = ranking[0];
             for (int j = 1; j < ranking.length; j++) {
                 if (menor > ranking[j]) {
@@ -185,5 +193,5 @@ public class Juego {
         }
         return terminado;
     }
-    
+
 }

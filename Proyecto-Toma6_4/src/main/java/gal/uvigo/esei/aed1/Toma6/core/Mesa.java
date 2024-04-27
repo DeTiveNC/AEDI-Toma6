@@ -96,12 +96,23 @@ public class Mesa {
         }
         return indexMejorFila;
     }
-    
+
+    /**
+     * Returns the size of the table.
+     *
+     * @return the size of the table
+     */
     public int tamaño(){
         return this.mesa.size();
     }
-    
-    
+
+    /**
+     * Modifies a specific row in the table by inserting a card and returning the cards that were replaced.
+     *
+     * @param index the index of the row to be modified
+     * @param carta the card to be inserted
+     * @return the list of cards that were replaced by the new card
+     */
     public List<Carta> modificacionFila(int index, Carta carta) {
         List<Carta> filaEscogida = this.mesa.get(index);
         List<Carta> clon = new ArrayList<>(filaEscogida);

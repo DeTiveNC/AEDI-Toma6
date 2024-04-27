@@ -79,12 +79,4 @@ public class Baraja {
     public Carta getCarta() {
         return baraja.pop();
     }
-
-    /**
-     * Pushes a card to the deck.
-     * @param carta the card to be pushed to the deck
-     */
-    public void pushCarta(Carta carta){
-        baraja.push(carta);
-    }
 }
