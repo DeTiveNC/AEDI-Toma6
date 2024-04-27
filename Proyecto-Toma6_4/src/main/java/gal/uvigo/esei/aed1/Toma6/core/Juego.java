@@ -21,6 +21,8 @@ public class Juego {
     private Baraja baraja;
     // The table for the game
     private Mesa mesa;
+    //players ranking 
+    private int[] ranking;
     // The cards chosen by the players in a round
     private List<Map.Entry<Jugador, Carta>> cartasEscogidas;
 
@@ -71,6 +73,7 @@ public class Juego {
         for (String nombre : nombres) {
             jugadores.add(new Jugador(nombre));
         }
+        this.ranking = new int [jugadores.size()];
     }
 
     /**
@@ -133,7 +136,6 @@ public class Juego {
             Carta carta = entrada.getValue();
             iu.mostrarMensaje(entrada.getKey() + "pone carta: " + entrada.getValue());
             List<Carta> resultado = mesa.insertarCartas(carta);
-            System.out.println(resultado);
             if (resultado != null) {
                 if (resultado.isEmpty()) {
                     iu.mostrarMensaje(entrada.getKey() + " necesitas indicar fila a poner la carta");
@@ -152,15 +154,16 @@ public class Juego {
         return result;
     }
 
+    
     private boolean finalizacionPartida() {
         boolean terminado = false;
-
-        int[] ranking = new int[jugadores.size()]; // [23,24,78,12]
+        
         for (int i = 0; i < jugadores.size(); i++) {
             ranking[i] = jugadores.get(i).getContadorBueyes();
-            if (ranking[i] >= 66) {
+            if (ranking[i] >= 10) {
                 terminado = true;
             }
+            System.out.println("El jugador " + jugadores.get(i).getNombre() + " tiene " + ranking[i] + " bueyes");
         }
         if (terminado == true) {
             int menor = ranking[0];
@@ -177,9 +180,10 @@ public class Juego {
             }
             for (Integer k : ganadores) {
                 iu.mostrarMensaje("Ganador/es : ");
-                iu.mostrarJugador(jugadores.get(k));
+                iu.mostrarMensaje(jugadores.get(k).getNombre());
             }
         }
         return terminado;
     }
+    
 }

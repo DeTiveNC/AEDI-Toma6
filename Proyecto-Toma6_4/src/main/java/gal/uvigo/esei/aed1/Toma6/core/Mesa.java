@@ -101,18 +101,15 @@ public class Mesa {
         return this.mesa.size();
     }
     
+    
     public List<Carta> modificacionFila(int index, Carta carta) {
         List<Carta> filaEscogida = this.mesa.get(index);
-        this.mesa.get(index).clear();
-        if (this.mesa.get(index).isEmpty()) {
-            System.out.println("asdsadsdfgfsdadfssdfdsf");
-        }
-        this.mesa.get(index).add(carta);
-        if (this.mesa.get(index).isEmpty()) {
-            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxx");
-        }
-        return filaEscogida;
+        List<Carta> clon = new ArrayList<>(filaEscogida);
+        filaEscogida.clear();
+        filaEscogida.add(carta);
+        return clon;
     }
+    
     /**
      * Returns a string representation of the table, including all cards in all
      * rows.

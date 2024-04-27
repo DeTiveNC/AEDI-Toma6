@@ -16,6 +16,7 @@ public class Jugador {
     // The cards in the player's hand
     private List<Carta> mano;
     private Stack<Carta> monto;
+    private int contadorBueyes;
 
     /**
      * Constructs a new player with the given name. The player's hand is initially empty.
@@ -25,6 +26,7 @@ public class Jugador {
         this.nombre = nombre;
         this.mano = new ArrayList<>();
         this.monto = new Stack<>();
+        this.contadorBueyes = 0;
     }
 
     /**
@@ -36,8 +38,10 @@ public class Jugador {
     }
     
     public int getContadorBueyes(){
-        int contadorBueyes = 0;
-        while(!monto.empty()) contadorBueyes += monto.pop().num_bueyes();
+        while (!monto.isEmpty()) {
+            Carta carta = monto.pop();
+            contadorBueyes = contadorBueyes + carta.num_bueyes();
+        }
         return contadorBueyes;
     }
 
@@ -78,8 +82,9 @@ public class Jugador {
     }
     
 public void comerCartas(List<Carta> cartasAComer){
-        while(!cartasAComer.isEmpty())
-            monto.push(cartasAComer.remove(0));
+            for (Carta carta: cartasAComer) {   
+                monto.push(carta);
+            }
     }
 
     /**
