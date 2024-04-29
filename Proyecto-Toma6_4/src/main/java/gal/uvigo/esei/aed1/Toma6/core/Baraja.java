@@ -29,21 +29,36 @@ public class Baraja {
      * @return the shuffled deck of cards
      */
     private Stack<Carta> crearBaraja() {
-        Random rm = new Random();
-        ArrayList<Carta> cartas = new ArrayList<>(104);
         this.baraja = new Stack<>();
         // Populate the deck with 104 cards, each with a unique number and a number of oxen
         for (int i = 1; i <= 104; i++){
             int n_bueyes = getNBueyes(i);
             // Add the card to the deck
-            cartas.add(new Carta(i, n_bueyes));
+            baraja.push(new Carta(i, n_bueyes));
         }
+        
+        return baraja;
+    }
+    
+    public boolean esVacia() {
+        return this.baraja.empty();
+    }
+    
+    public void barajar(Baraja baraja){
+        Random rm = new Random();
+        ArrayList<Carta> cartas = new ArrayList<>(104);
+        
+        while (!baraja.esVacia()) {
+            cartas.add(baraja.getCarta());
+        }
+        
         // Shuffle the deck
         while (!cartas.isEmpty()){
             int randomNumber = rm.nextInt(cartas.size());
-            baraja.push(cartas.remove(randomNumber));
+            baraja.darCarta(cartas.remove(randomNumber));
         }
-        return baraja;
+        
+        
     }
 
     /**
@@ -79,4 +94,11 @@ public class Baraja {
     public Carta getCarta() {
         return baraja.pop();
     }
+    
+    public void darCarta(Carta carta){
+        this.baraja.push(carta);
+    }
+    
+    
+    
 }

@@ -41,10 +41,15 @@ public class Jugador {
     /**
      * Returns the total number of bulls (bueyes) in the player's stack (monto).
      * It iterates over the stack, popping each card and adding its number of bulls to the counter.
+     * @param baraja
      * @return the total number of bulls in the player's stack
      */
-    public int getContadorBueyes(){
-        while (!monto.isEmpty()) contadorBueyes += monto.pop().num_bueyes();
+    public int getContadorBueyes(Baraja baraja){
+        while (!monto.isEmpty()) {
+            Carta carta = monto.pop();
+            contadorBueyes += carta.num_bueyes();
+            baraja.darCarta(carta);
+        }
         return contadorBueyes;
     }
 
@@ -53,9 +58,17 @@ public class Jugador {
      * @param carta the card to be added to the player's hand
      */
     public void anadirCarta(Carta carta) {
+    int posicion = 0;
+    if (this.mano.isEmpty()) {
         this.mano.add(carta);
-        this.mano.sort(Comparator.comparingInt(Carta::number));
+    } else {
+        while (posicion < this.mano.size() && this.mano.get(posicion).number() < carta.number()) {
+            posicion++;
+        }
+        this.mano.add(posicion, carta);
     }
+}
+
 
     /**
      * Returns the size of cards in the player's hand.

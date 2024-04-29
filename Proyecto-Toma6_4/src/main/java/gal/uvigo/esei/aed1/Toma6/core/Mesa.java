@@ -62,15 +62,10 @@ public class Mesa {
      * Inserts the card into the first empty row.
      *
      * @param carta the card to be inserted
+     * @param index
      */
-    public void inicializarCartasIniciales(Carta carta) {
-        boolean agregada = false;
-        for (LinkedList<Carta> fila : mesa) {
-            if (fila.isEmpty() && !agregada) {
-                fila.add(carta);
-                agregada = true;
-            }
-        }
+    public void inicializarCartasIniciales(Carta carta, int index) {
+        mesa.get(index).add(carta);
     }
 
     /**
@@ -139,4 +134,13 @@ public class Mesa {
         }
         return str.toString();
     }
+
+    public void vaciarMesa(Baraja baraja) {
+        for (LinkedList<Carta> fila : mesa) {
+            while(!fila.isEmpty()) {
+                baraja.darCarta(fila.remove());
+            }
+        }
+    }
+    
 }

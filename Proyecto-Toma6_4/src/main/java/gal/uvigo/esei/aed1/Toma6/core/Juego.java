@@ -34,6 +34,8 @@ public class Juego {
     public Juego(IU iu) {
         this.iu = iu;
         this.jugadores = new LinkedList<>();
+        this.baraja = new Baraja();
+        this.mesa = new Mesa();
     }
 
     /**
@@ -43,10 +45,9 @@ public class Juego {
         boolean acabada;
         insertarJugadores();
         do {
-            crearBaraja();
+            baraja.barajar(this.baraja);
             repartirCartas();
             mostrarInformacionJugadores();
-            crearMesa();
             colocarCartasInicialesMesa();
             mostrarInformacionMesa();
             for (int i = 0; i < 10; i++) {
@@ -56,13 +57,6 @@ public class Juego {
             acabada = finalizacionPartida();
         } while (!acabada);
         iu.mostrarMensaje("Partida Acabada");
-    }
-
-    /**
-     * Creates a new deck of cards for the game.
-     */
-    private void crearBaraja() {
-        this.baraja = new Baraja();
     }
 
     /**
@@ -80,6 +74,7 @@ public class Juego {
      * Distributes 10 cards to each player.
      */
     private void repartirCartas() {
+        iu.mostrarMensaje("Creando la mesa de juego");
         for (int i = 0; i < 10; i++) {
             for (Jugador j : jugadores) {
                 j.anadirCarta(baraja.getCarta());
@@ -96,19 +91,11 @@ public class Juego {
     }
 
     /**
-     * Creates a new table for the game.
-     */
-    private void crearMesa() {
-        iu.mostrarMensaje("Creando la mesa de juego");
-        mesa = new Mesa();
-    }
-
-    /**
      * Places the initial cards on the table.
      */
     private void colocarCartasInicialesMesa() {
         for (int i = 0; i < 4; i++) {
-            mesa.inicializarCartasIniciales(baraja.getCarta());
+            mesa.inicializarCartasIniciales(baraja.getCarta(),i);
         }
         iu.mostrarMensaje("Cartas iniciales estan puestas en la mesa");
     }
@@ -167,11 +154,11 @@ public class Juego {
         boolean terminado = false;
 
         for (int i = 0; i < jugadores.size(); i++) {
-            ranking[i] = jugadores.get(i).getContadorBueyes();
+            ranking[i] = jugadores.get(i).getContadorBueyes(this.baraja);
             if (ranking[i] >= 66) {
                 terminado = true;
             }
-            System.out.println("El jugador " + jugadores.get(i).getNombre() + " tiene " + ranking[i] + " bueyes");
+            iu.mostrarMensaje("El jugador " + jugadores.get(i).getNombre() + " tiene " + ranking[i] + " bueyes");
         }
         if (terminado) {
             int menor = ranking[0];
@@ -190,8 +177,14 @@ public class Juego {
                 iu.mostrarMensaje("Ganador/es : ");
                 iu.mostrarMensaje(jugadores.get(k).getNombre());
             }
+        } else {
+            vaciarMesa();
         }
         return terminado;
+    }
+
+    private void vaciarMesa() {
+        mesa.vaciarMesa(this.baraja);
     }
 
 }
