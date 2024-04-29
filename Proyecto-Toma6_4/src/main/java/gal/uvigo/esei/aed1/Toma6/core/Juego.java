@@ -45,7 +45,7 @@ public class Juego {
         boolean acabada;
         insertarJugadores();
         do {
-            baraja.barajar(this.baraja);
+            baraja.barajar(this.baraja); //barajamos la baraja que hemos creado
             repartirCartas();
             mostrarInformacionJugadores();
             colocarCartasInicialesMesa();

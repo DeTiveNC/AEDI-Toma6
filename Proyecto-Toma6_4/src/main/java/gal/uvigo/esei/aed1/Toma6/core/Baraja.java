@@ -95,6 +95,7 @@ public class Baraja {
         return baraja.pop();
     }
     
+    
     public void darCarta(Carta carta){
         this.baraja.push(carta);
     }
