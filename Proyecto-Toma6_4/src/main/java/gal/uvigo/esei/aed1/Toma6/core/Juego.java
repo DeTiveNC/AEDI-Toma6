@@ -10,6 +10,7 @@ import java.util.*;
 
 /**
  * This class represents the game Toma 6.
+ * It manages the game flow, including player turns, card distribution, and game termination.
  */
 public class Juego {
 
@@ -21,10 +22,8 @@ public class Juego {
     private Baraja baraja;
     // The table for the game
     private Mesa mesa;
-    //players ranking 
+    //players ranking
     private int[] ranking;
-    // The cards chosen by the players in a round
-    private List<Map.Entry<Jugador, Carta>> cartasEscogidas;
 
     /**
      * Constructs a new game with the given user interface.
@@ -40,6 +39,7 @@ public class Juego {
 
     /**
      * Starts the game.
+     * It manages the game flow, including player turns, card distribution, and game termination.
      */
     public void jugar() {
         boolean acabada;
@@ -54,6 +54,7 @@ public class Juego {
                 iu.mostrarMensaje("Ronda " + (i + 1) + ":");
                 ronda();
             }
+            iu.mostrarMensaje("Fin de la ronda");
             acabada = finalizacionPartida();
         } while (!acabada);
         iu.mostrarMensaje("Partida Acabada");
@@ -61,6 +62,7 @@ public class Juego {
 
     /**
      * Inserts players into the game.
+     * It asks for player names through the user interface and adds them to the game.
      */
     private void insertarJugadores() {
         Collection<String> nombres = iu.pedirNombresJugadores();
@@ -72,6 +74,7 @@ public class Juego {
 
     /**
      * Distributes 10 cards to each player.
+     * It takes cards from the deck and gives them to the players.
      */
     private void repartirCartas() {
         iu.mostrarMensaje("Creando la mesa de juego");
@@ -85,6 +88,7 @@ public class Juego {
 
     /**
      * Displays information about the players in the game.
+     * It uses the user interface to show the players' information.
      */
     private void mostrarInformacionJugadores() {
         iu.mostrarJugadores(jugadores);
@@ -92,6 +96,7 @@ public class Juego {
 
     /**
      * Places the initial cards on the table.
+     * It takes cards from the deck and places them on the table.
      */
     private void colocarCartasInicialesMesa() {
         for (int i = 0; i < 4; i++) {
@@ -102,6 +107,7 @@ public class Juego {
 
     /**
      * Displays information about the table in the game.
+     * It uses the user interface to show the table's information.
      */
     private void mostrarInformacionMesa() {
         iu.mostrarMesa(mesa);
@@ -113,7 +119,8 @@ public class Juego {
      * the table, a message is displayed.
      */
     private void ronda() {
-        cartasEscogidas = iu.cartasEscogidasOrden(jugadores);
+        // The cards chosen by the players in a round
+        List<Map.Entry<Jugador, Carta>> cartasEscogidas = iu.cartasEscogidasOrden(jugadores);
 
         // Utilizamos una lambda para comparar los valores de las cartas directamente
         cartasEscogidas.sort(Comparator.comparingInt(jugadorAnterior -> jugadorAnterior.getValue().number()));
@@ -174,7 +181,7 @@ public class Juego {
                 }
             }
             for (Integer k : ganadores) {
-                iu.mostrarMensaje("Ganador/es : ");
+                iu.mostrarMensaje("Ganador/es: ");
                 iu.mostrarMensaje(jugadores.get(k).getNombre());
             }
         } else {
@@ -183,6 +190,10 @@ public class Juego {
         return terminado;
     }
 
+    /**
+     * Empties the table.
+     * It removes all cards from the table.
+     */
     private void vaciarMesa() {
         mesa.vaciarMesa(this.baraja);
     }

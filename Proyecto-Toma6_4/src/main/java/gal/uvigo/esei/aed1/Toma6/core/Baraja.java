@@ -34,31 +34,39 @@ public class Baraja {
         for (int i = 1; i <= 104; i++){
             int n_bueyes = getNBueyes(i);
             // Add the card to the deck
+            assert this.baraja != null;
             baraja.push(new Carta(i, n_bueyes));
         }
-        
+
         return baraja;
     }
-    
+
+    /**
+     * Checks if the deck is empty.
+     * @return true if the deck is empty, false otherwise
+     */
     public boolean esVacia() {
         return this.baraja.empty();
     }
-    
+
+    /**
+     * Shuffles the deck of cards.
+     * @param baraja the deck to be shuffled
+     */
     public void barajar(Baraja baraja){
         Random rm = new Random();
         ArrayList<Carta> cartas = new ArrayList<>(104);
-        
+
+        // Move all cards from the deck to an ArrayList
         while (!baraja.esVacia()) {
             cartas.add(baraja.getCarta());
         }
-        
+
         // Shuffle the deck
         while (!cartas.isEmpty()){
             int randomNumber = rm.nextInt(cartas.size());
             baraja.darCarta(cartas.remove(randomNumber));
         }
-        
-        
     }
 
     /**
@@ -94,12 +102,12 @@ public class Baraja {
     public Carta getCarta() {
         return baraja.pop();
     }
-    
-    
+
+    /**
+     * Adds a card to the deck.
+     * @param carta the card to be added to the deck
+     */
     public void darCarta(Carta carta){
         this.baraja.push(carta);
     }
-    
-    
-    
 }

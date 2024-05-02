@@ -1,26 +1,22 @@
 /**
  * This class represents a player in the game Toma 6. Each player is identified by their name and the cards in their hand.
+ * The player's hand is represented by a list of cards, and the player's stack (or "monto") is represented by a stack of cards.
+ * The player also keeps track of the total number of bulls (or "bueyes") in their stack.
  */
 package gal.uvigo.esei.aed1.Toma6.core;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Stack;
 
-/**
- * This class represents a player in the game Toma 6.
- */
 public class Jugador {
-    // The name of the player
     private final String nombre;
-    // The cards in the player's hand
     private List<Carta> mano;
     private Stack<Carta> monto;
     private int contadorBueyes;
 
     /**
-     * Constructs a new player with the given name. The player's hand is initially empty.
+     * Constructs a new player with the given name. The player's hand and stack are initially empty.
      * @param nombre the name of the player
      */
     public Jugador(String nombre) {
@@ -41,7 +37,7 @@ public class Jugador {
     /**
      * Returns the total number of bulls (bueyes) in the player's stack (monto).
      * It iterates over the stack, popping each card and adding its number of bulls to the counter.
-     * @param baraja
+     * @param baraja the deck of cards
      * @return the total number of bulls in the player's stack
      */
     public int getContadorBueyes(Baraja baraja){
@@ -58,17 +54,16 @@ public class Jugador {
      * @param carta the card to be added to the player's hand
      */
     public void anadirCarta(Carta carta) {
-    int posicion = 0;
-    if (this.mano.isEmpty()) {
-        this.mano.add(carta);
-    } else {
-        while (posicion < this.mano.size() && this.mano.get(posicion).number() < carta.number()) {
-            posicion++;
+        int posicion = 0;
+        if (this.mano.isEmpty()) {
+            this.mano.add(carta);
+        } else {
+            while (posicion < this.mano.size() && this.mano.get(posicion).number() < carta.number()) {
+                posicion++;
+            }
+            this.mano.add(posicion, carta);
         }
-        this.mano.add(posicion, carta);
     }
-}
-
 
     /**
      * Returns the size of cards in the player's hand.

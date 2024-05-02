@@ -13,6 +13,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * The IU class is responsible for handling all user interactions in the game.
+ * It provides methods for reading user input and displaying messages.
+ */
 public class IU {
 
     // Scanner object for reading input from the user
@@ -121,6 +125,13 @@ public class IU {
         mostrarMensaje(mesa.toString());
     }
 
+    /**
+     * This method asks each player to choose a card and returns a list of pairs (player, chosen card).
+     * The chosen card is removed from the player's hand.
+     *
+     * @param jugadores the players who have to choose a card
+     * @return a list of pairs (player, chosen card)
+     */
     public List<Map.Entry<Jugador, Carta>> cartasEscogidasOrden(Collection<Jugador> jugadores) {
         List<Map.Entry<Jugador, Carta>> hashCartas = new ArrayList<>();
         Map.Entry<Jugador, Carta> seleccion;
@@ -136,12 +147,18 @@ public class IU {
         return hashCartas;
     }
 
+    /**
+     * This method asks the user to choose a row from the game table.
+     *
+     * @param mesa the game table from which a row has to be chosen
+     * @return the index of the chosen row
+     */
     public int obtenerFilaMesa(Mesa mesa) {
         int index;
         mostrarMesa(mesa);
         do {
             index = leeNum("Escoge una carta por indice (de 1 a " + mesa.tamaño() + ")" + ":");
         } while (1 > index || index > mesa.tamaño());
-        return index-1;
+        return index - 1;
     }
 }
