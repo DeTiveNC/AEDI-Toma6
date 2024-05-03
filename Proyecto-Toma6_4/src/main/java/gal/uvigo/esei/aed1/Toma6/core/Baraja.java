@@ -51,21 +51,20 @@ public class Baraja {
 
     /**
      * Shuffles the deck of cards.
-     * @param baraja the deck to be shuffled
      */
-    public void barajar(Baraja baraja){
+    public void barajar(){
         Random rm = new Random();
         ArrayList<Carta> cartas = new ArrayList<>(104);
 
         // Move all cards from the deck to an ArrayList
-        while (!baraja.esVacia()) {
-            cartas.add(baraja.getCarta());
+        while (!baraja.empty()) {
+            cartas.add(baraja.pop());
         }
 
         // Shuffle the deck
         while (!cartas.isEmpty()){
             int randomNumber = rm.nextInt(cartas.size());
-            baraja.darCarta(cartas.remove(randomNumber));
+            baraja.push(cartas.remove(randomNumber));
         }
     }
 

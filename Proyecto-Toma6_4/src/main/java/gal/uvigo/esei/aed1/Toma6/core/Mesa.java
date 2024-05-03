@@ -115,6 +115,19 @@ public class Mesa {
         filaEscogida.add(carta);
         return clon;
     }
+
+    /**
+     * Empties the table by removing all cards from all rows and adding them back to the deck.
+     *
+     * @param baraja the deck of cards
+     */
+    public void vaciarMesa(Baraja baraja) {
+        for (LinkedList<Carta> fila : mesa) {
+            while(!fila.isEmpty()) {
+                baraja.darCarta(fila.remove());
+            }
+        }
+    }
     
     /**
      * Returns a string representation of the table, including all cards in all
@@ -134,13 +147,4 @@ public class Mesa {
         }
         return str.toString();
     }
-
-    public void vaciarMesa(Baraja baraja) {
-        for (LinkedList<Carta> fila : mesa) {
-            while(!fila.isEmpty()) {
-                baraja.darCarta(fila.remove());
-            }
-        }
-    }
-    
 }
