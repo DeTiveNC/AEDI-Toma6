@@ -69,7 +69,7 @@ public class Juego {
         for (String nombre : nombres) {
             jugadores.add(new Jugador(nombre));
         }
-        this.ranking = new int [jugadores.size()];
+        this.ranking = new int[jugadores.size()];
     }
 
     /**
@@ -99,9 +99,7 @@ public class Juego {
      * It takes cards from the deck and places them on the table.
      */
     private void colocarCartasInicialesMesa() {
-        for (int i = 0; i < 4; i++) {
-            mesa.inicializarCartasIniciales(baraja.getCarta(),i);
-        }
+        mesa.inicializarCartasIniciales(this.baraja);
         iu.mostrarMensaje("Cartas iniciales estan puestas en la mesa");
     }
 
@@ -128,6 +126,7 @@ public class Juego {
         // Now cartasOrdenadas has the cards ordered by the value of the Card
         for (Map.Entry<Jugador, Carta> entrada : cartasEscogidas) {
             Carta carta = entrada.getValue();
+            entrada.getKey().eliminarCartaObjeto(carta);
             iu.mostrarMensaje(entrada.getKey() + "pone carta: " + entrada.getValue());
             List<Carta> resultado = mesa.insertarCartas(carta);
             if (resultado != null) {
@@ -145,6 +144,7 @@ public class Juego {
 
     /**
      * Inserts a card into a specific row on the table.
+     *
      * @param carta the card to be inserted
      * @return the list of cards that were replaced by the new card
      */
@@ -155,6 +155,7 @@ public class Juego {
 
     /**
      * Determines if the game is over. The game is over if any player has 66 or more bulls.
+     *
      * @return true if the game is over, false otherwise
      */
     private boolean finalizacionPartida() {

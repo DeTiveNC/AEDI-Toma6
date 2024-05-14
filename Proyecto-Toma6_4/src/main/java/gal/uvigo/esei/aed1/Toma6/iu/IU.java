@@ -141,7 +141,7 @@ public class IU {
             do {
                 index = leeNum("Escoge una carta por indice (de 1 a " + j.tamañoMano() + ")" + ":");
             } while (1 > index || index > j.tamañoMano());
-            seleccion = Map.entry(j, j.eliminarCartaporPosicion(index));
+            seleccion = Map.entry(j, j.obtenerCartaPorIndex(index));
             hashCartas.add(seleccion);
         }
         return hashCartas;

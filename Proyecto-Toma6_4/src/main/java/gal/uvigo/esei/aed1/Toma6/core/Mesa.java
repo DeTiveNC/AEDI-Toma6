@@ -38,7 +38,7 @@ public class Mesa {
      * card is inserted into the first empty row.
      *
      * @param carta the card to be inserted
-     * @return true if the card was inserted, false otherwise
+     * @return null if the card is inserted, if it can´t a List of cards empty and is more than five all the cards in that fila
      */
     public List<Carta> insertarCartas(Carta carta) {
         List<Carta> cartasComidas = new ArrayList<>();
@@ -60,12 +60,10 @@ public class Mesa {
 
     /**
      * Inserts the card into the first empty row.
-     *
-     * @param carta the card to be inserted
-     * @param index
+     * @param baraja to insert one card on each row
      */
-    public void inicializarCartasIniciales(Carta carta, int index) {
-        mesa.get(index).add(carta);
+    public void inicializarCartasIniciales(Baraja baraja) {
+        for (LinkedList<Carta> fila : mesa) fila.add(baraja.getCarta());
     }
 
     /**

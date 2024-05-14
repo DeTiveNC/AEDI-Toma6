@@ -17,6 +17,7 @@ public class Jugador {
 
     /**
      * Constructs a new player with the given name. The player's hand and stack are initially empty.
+     *
      * @param nombre the name of the player
      */
     public Jugador(String nombre) {
@@ -28,6 +29,7 @@ public class Jugador {
 
     /**
      * Returns the name of the player.
+     *
      * @return the name of the player
      */
     public String getNombre() {
@@ -37,10 +39,11 @@ public class Jugador {
     /**
      * Returns the total number of bulls (bueyes) in the player's stack (monto).
      * It iterates over the stack, popping each card and adding its number of bulls to the counter.
+     *
      * @param baraja the deck of cards
      * @return the total number of bulls in the player's stack
      */
-    public int getContadorBueyes(Baraja baraja){
+    public int getContadorBueyes(Baraja baraja) {
         while (!monto.isEmpty()) {
             Carta carta = monto.pop();
             contadorBueyes += carta.num_bueyes();
@@ -51,6 +54,7 @@ public class Jugador {
 
     /**
      * Adds a card to the player's hand (mano) and sorts the hand in ascending order based on the card number.
+     *
      * @param carta the card to be added to the player's hand
      */
     public void anadirCarta(Carta carta) {
@@ -67,33 +71,47 @@ public class Jugador {
 
     /**
      * Returns the size of cards in the player's hand.
+     *
      * @return the size of cards in the player's hand
      */
-    public int tamañoMano(){
+    public int tamañoMano() {
         return this.mano.size();
     }
 
     /**
      * Adds a list of cards to the player's stack (monto).
+     *
      * @param cartasAComer the list of cards to be added to the player's stack
      */
-    public void comerCartas(List<Carta> cartasAComer){
-        for (Carta carta: cartasAComer) {
+    public void comerCartas(List<Carta> cartasAComer) {
+        for (Carta carta : cartasAComer) {
             monto.push(carta);
         }
     }
 
     /**
-     * Removes a card from the player's hand (mano) at a certain position.
-     * @param index the position of the card to be removed (1-based index)
-     * @return the removed card
+     * Removes a card from the player's hand (mano) at the carta that you passed.
+     *
+     * @param index the object card to be removed
+     * @return true when delete it
      */
-    public Carta eliminarCartaporPosicion(int index){
-        return this.mano.remove(index - 1);
+    public boolean eliminarCartaObjeto(Carta index) {
+        return this.mano.remove(index);
+    }
+
+    /**
+     * Get a card from the player's hand (mano) at a certain position.
+     *
+     * @param index the position of the card to be picked (1-based index)
+     * @return the card on that position
+     */
+    public Carta obtenerCartaPorIndex(int index) {
+        return this.mano.get(index - 1);
     }
 
     /**
      * Returns a string representation of the player, including their name and the cards in their hand.
+     *
      * @return a string representation of the player
      */
     @Override
