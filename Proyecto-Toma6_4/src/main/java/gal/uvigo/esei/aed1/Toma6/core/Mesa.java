@@ -63,7 +63,9 @@ public class Mesa {
      * @param baraja to insert one card on each row
      */
     public void inicializarCartasIniciales(Baraja baraja) {
-        for (LinkedList<Carta> fila : mesa) fila.add(baraja.getCarta());
+        for (LinkedList<Carta> fila : mesa) {
+            fila.add(baraja.getCarta());
+        }
     }
 
     /**
@@ -79,7 +81,7 @@ public class Mesa {
 
         for (int i = 0; i < mesa.size(); i++) {
             LinkedList<Carta> fila = mesa.get(i);
-            if (!fila.isEmpty() && fila.getLast().number() < carta.number()) {
+            if (fila.getLast().number() < carta.number()) {
                 int diferenciaActual = carta.number() - fila.getLast().number();
                 if (diferenciaActual < diferenciaMinima) {
                     diferenciaMinima = diferenciaActual;

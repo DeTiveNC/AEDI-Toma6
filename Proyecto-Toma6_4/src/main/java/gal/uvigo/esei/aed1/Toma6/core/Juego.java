@@ -121,6 +121,7 @@ public class Juego {
         List<Map.Entry<Jugador, Carta>> cartasEscogidas = iu.cartasEscogidasOrden(jugadores);
 
         // Utilizamos una lambda para comparar los valores de las cartas directamente
+        // en caso de que se haya que poner de mayor a menor cartasEscogidas.sort((jugador1, jugador2) -> Integer.compare(jugador2.getValue().number(), jugador1.getValue().number()));
         cartasEscogidas.sort(Comparator.comparingInt(jugadorAnterior -> jugadorAnterior.getValue().number()));
 
         // Now cartasOrdenadas has the cards ordered by the value of the Card
