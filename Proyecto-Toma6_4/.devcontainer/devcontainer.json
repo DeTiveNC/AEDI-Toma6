@@ -13,9 +13,6 @@
 		}
 	},
 
-	"workspaceMount": "source=${localWorkspaceFolder}/Proyecto-Toma6_4,target=/Proyecto-Toma6_4,type=bind",
-	"workspaceFolder": "/Proyecto-Toma6_4",
-
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
 	// "forwardPorts": [],
 
